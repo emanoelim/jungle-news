@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: master
+  pull_request:
+    branches: master
+
+env:
+  WEB_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/web
+  
+jobs:
+  test:
+      name: Run tests
+      runs-on: ubuntu-latest
+      services:
+        postgres:
+          image: postgres
+          env:
+            POSTGRES_DB: postgres
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+          ports:
+          - 5432:5432
+      steps:
+        - name: Checkout master
+          uses: actions/checkout@v1
+        - name: Run tests and lint
+          run: |
+            sudo apt-get install gcc
+            python -m venv .venv
+            source .venv/bin/activate
+            pip install --upgrade pip
+            pip install --upgrade setuptools
+            pip install -r requirements.txt
+            python manage.py migrate --no-input
+            python manage.py test
+            flake8 hello_django --max-line-length=100
+
+  build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v1
+      - name: Set environment variables
+        run: echo "WEB_IMAGE=$(echo ${{env.WEB_IMAGE}} )" >> $GITHUB_ENV
+      - name: Log in to GitHub Packages
+        run: echo ${{ secrets.PERSONAL_ACCESS_TOKEN }} | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
+      - name: Pull image
+        run: docker pull $WEB_IMAGE:latest || true
+      - name: Build image
+        run: docker build --cache-from $WEB_IMAGE:latest --tag $WEB_IMAGE:latest --file ./Dockerfile "."
+      - name: Push image
+        run: docker push $WEB_IMAGE:latest
+
+  deploy:
+    name: Deploy to Heroku
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v1
+      - name: Deploy
+        run: |
+          sudo apt-get update -qy
+          sudo apt-get install -y ruby-dev
+          sudo gem install dpl
+          sudo dpl --provider=heroku --app=${{ secrets.HEROKU_APP_NAME }} --api-key=${{ secrets.HEROKU_AUTH_TOKEN }}
