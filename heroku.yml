@@ -2,7 +2,7 @@ build:
   docker:
     web: Dockerfile
 run:
-  web: gunicorn jungle-news.wsgi:application --bind 0.0.0.0:$PORT
+  web: gunicorn jungle_news.wsgi:application --bind 0.0.0.0:$PORT
 release:
   image: web
   command:
