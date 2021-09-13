@@ -5,3 +5,4 @@
 * Run collectstatic: `docker-compose exec web python manage.py collectstatic --noinput`
 * Run migrations: `docker-compose exec web python manage.py migrate --noinput`
 * Create Django admin user: `docker-compose exec web python manage.py createsuperuser`
+* Url: http://0.0.0.0:8000/
