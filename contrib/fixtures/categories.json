@@ -1,0 +1,74 @@
+[
+    {
+        "model": "article.category",
+        "fields": {
+            "name": "Arts & Entertainment"
+        }
+    },
+    {
+        "model": "article.category",
+        "fields": {
+            "name": "Culture"
+        }
+    },
+    {
+        "model": "article.category",
+        "fields": {
+            "name": "Equality"
+        }
+    },
+    {
+        "model": "article.category",
+        "fields": {
+            "name": "Health"
+        }
+    },
+    {
+        "model": "article.category",
+        "fields": {
+            "name": "Industry"
+        }
+    },
+    {
+        "model": "article.category",
+        "fields": {
+            "name": "Personal Development"
+        }
+    },
+    {
+        "model": "article.category",
+        "fields": {
+            "name": "Politics"
+        }
+    },
+    {
+        "model": "article.category",
+        "fields": {
+            "name": "Programming"
+        }
+    },
+    {
+        "model": "article.category",
+        "fields": {
+            "name": "Science"
+        }
+    },
+    {
+        "model": "article.category",
+        "fields": {
+            "name": "Self"
+        }
+    },
+    {
+        "model": "article.category",
+        "fields": {
+            "name": "Society"
+        }
+    },
+    {
+        "model": "article.category",
+        "fields": {
+            "name": "Technology"
+        }
+    }
+]
