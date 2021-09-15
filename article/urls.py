@@ -1,10 +1,11 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from author.views import AuthorView
+from article.views import ArticleView, ArticleListView
 
 router = DefaultRouter()
-router.register('admin/authors', AuthorView)
+router.register('admin/articles', ArticleView)
+router.register('articles', ArticleListView)
 
 urlpatterns = [
     path('', include(router.urls)),
