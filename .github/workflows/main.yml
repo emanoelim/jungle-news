@@ -33,7 +33,7 @@ jobs:
             pip install -r requirements.txt
             python manage.py migrate --no-input
             python manage.py test
-            flake8 jungle_news --max-line-length=100
+            flake8 --max-line-length=120 --exclude .venv,.github,.idea,contrib
 
   build:
     name: Build Docker Images
