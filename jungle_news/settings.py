@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY', default='foo')
 
-DEBUG = config('DEBUG', default=0)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'jungle-news.herokuapp.com']
 
@@ -140,9 +140,9 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
 
-USE_S3 = config('USE_S3', default=0)
+USE_S3 = config('USE_S3', default=False, cast=bool)
 
-if int(USE_S3):
+if USE_S3:
     # aws settings
     AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
