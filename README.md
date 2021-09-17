@@ -23,7 +23,17 @@ AWS_STORAGE_BUCKET_NAME=your_buckt_name
 * Url: http://0.0.0.0:8000/
 
 ### Production mode
-* The application is running on Heroku. Deploy is done automatically after a merge to the `master` branch.
+The application is running on Heroku. Deploy is done automatically after a merge to the `master` branch, 
+if workflow succeeds. The workflow consists of 3 steps:
+* Tests and lint;
+* Image build;
+* Deploy to Heroku.
 
 ### Documentation
 * https://jungle-news.herokuapp.com/api/swagger
+
+### Next steps
+* New fields for the article model, like publication date and picture;
+* CRUD /api/admin/category/;
+* Subcategories;
+* User logout.
